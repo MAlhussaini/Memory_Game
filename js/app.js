@@ -25,21 +25,20 @@ Bonus:
 // Toggle the cards
 let cards = document.querySelectorAll(".card");
 
-function toggleShow () {
+function toggleCards () {
     for (const element of cards) {
         element.classList.toggle("show");
     }
 
 }
 
-setTimeout(toggleShow,300);
-setTimeout(toggleShow,3000);
+setTimeout(toggleCards,300);
+setTimeout(toggleCards,3000);
 
 // Adding event listener to show the cards
 
 function cardSelect() {
-    this.classList.toggle("show");
-    this.classList.toggle("open");        
+    this.setAttribute("class", "show open card");
 }
 
 for (const card of cards) {
@@ -73,11 +72,9 @@ function cardLatch(array) {
 }
 
 
-
-// document.getElementsByClassName("card").addEventListener("click",function() {document.querySelector(".card").classList.toggle("match")});
-
-// document.querySelectorAll(".card").addEventListener("click",cardSelect);
-
-// let card = document.querySelector(".card");
-
-// cards.addEventListener("onclick", cardSelect(card))
+/* 
+function cardSelect() {
+    this.classList.toggle("show");
+    this.classList.toggle("open");        
+}
+ */
