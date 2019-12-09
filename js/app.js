@@ -1,9 +1,9 @@
 /* Core Features:
 *1 - Start screen to take the name (Player as default name) and start button.
 *2 - Shuffle all the cards. 
-*3 - All Cards must be flipped down at the start of the game.
-*4 - A click on a card flip it faced up.
-*5 - If two cards clicked then latch, or hide.
+// *3 - All Cards must be flipped down at the start of the game.
+// *4 - A click on a card flip it faced up.
+// *5 - If two cards clicked then latch, or hide.
 *6 - Create a list that holds all of opened cards
 *7 - Each 2 clicks is one move. 
 *8 - Time start at the start of the game.
@@ -38,11 +38,13 @@ setTimeout(toggleCards,3000);
 // Adding event listener to show the cards
 let cardFlag = 1;
 let card1 , class1, class2;
+let matchCounter = 0;
 
 function cardLatch(element) {
     element.classList.toggle("show");
     element.classList.toggle("open");        
-    element.classList.toggle("match") ;
+    element.classList.toggle("match");
+    matchCounter += 1;
 }
 
 
@@ -75,6 +77,9 @@ function cardSelect() {
     
         }
         cardFlag = 1;
+    }
+    if (matchCounter === 16) {
+        console.log("You have won!")
     }
 }
 
