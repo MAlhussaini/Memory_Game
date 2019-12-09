@@ -13,7 +13,7 @@
 
 Bonus:
 * Flipping card animation.
-* Game start: Show all the cared faced up for 3s.
+// * Game start: Show all the cared faced up for 3s.
 * Shake the cards OR make the background color red on wrong answers.
 * if the cards match, make animation and make the background green.
 * Flipping card animation.
@@ -36,9 +36,36 @@ setTimeout(toggleCards,300);
 setTimeout(toggleCards,3000);
 
 // Adding event listener to show the cards
+let cardFlag = 1;
+let card1 , class1, class2;
+
+function cardLatch(element) {
+    element.classList.toggle("show");
+    element.classList.toggle("open");        
+    element.classList.toggle("match") ;
+}
+
 
 function cardSelect() {
     this.setAttribute("class", "show open card");
+    
+    if (cardFlag === 1) {
+        class1 = this.firstElementChild.className
+        cardFlag = 2;
+        card1 = this;
+    }
+    else {
+
+        if (cardFlag === 2) {
+            class2 = this.firstElementChild.className
+            if (class1 === class2) {
+                cardLatch(card1)
+                cardLatch(this)
+            }
+    
+        }
+        cardFlag = 1;
+    }
 }
 
 for (const card of cards) {
@@ -62,14 +89,7 @@ function shuffle(array) {
 
 // !Small scale code.
 
-function cardLatch(array) {
-    for (const element of array) {
-        element.classList.toggle("show");
-        element.classList.toggle("open");        
-        element.classList.toggle("match") ;
-    }
-    
-}
+
 
 
 /* 
