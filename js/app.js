@@ -46,6 +46,12 @@ function cardLatch(element) {
 }
 
 
+function cardReset(element) {
+    element.setAttribute("class", "card no-match");
+    setTimeout(function() {
+        element.classList.remove("no-match")},700);
+}
+
 function cardSelect() {
     this.setAttribute("class", "show open card");
     
@@ -59,8 +65,12 @@ function cardSelect() {
         if (cardFlag === 2) {
             class2 = this.firstElementChild.className
             if (class1 === class2) {
-                cardLatch(card1)
                 cardLatch(this)
+                cardLatch(card1)
+            }
+            else {
+                cardReset(this);
+                cardReset(card1);
             }
     
         }
