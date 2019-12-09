@@ -28,15 +28,23 @@ let cards = document.querySelectorAll(".card");
 function toggleShow () {
     for (const element of cards) {
         element.classList.toggle("show");
-        console.log("toggle executed");
     }
 
 }
 
-setTimeout(toggleShow,500);
+setTimeout(toggleShow,300);
 setTimeout(toggleShow,3000);
 
+// Adding event listener to show the cards
 
+function cardSelect() {
+    this.classList.toggle("show");
+    this.classList.toggle("open");        
+}
+
+for (const card of cards) {
+    card.addEventListener("click",cardSelect)
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -53,13 +61,8 @@ function shuffle(array) {
     return array;
 }
 
-// Small scale code.
-// Selecting the first card
+// !Small scale code.
 
-function cardSelect(element) {
-    element.classList.toggle("show");
-    element.classList.toggle("open");        
-}
 function cardLatch(array) {
     for (const element of array) {
         element.classList.toggle("show");
@@ -69,17 +72,12 @@ function cardLatch(array) {
     
 }
 
-let card = document.querySelector(".card");
-
-// setTimeout(toggleShow(cards),100000);
-// window.setTimeout(toggleShow(cards),20000);
 
 
-/* 
-let firstCard = document.querySelector(".card").classList;
-console.log(firstCard);
-firstCard.toggle("show");
-firstCard.toggle("open");
-firstCard = document.querySelector(".card").classList;
-console.log(firstCard); 
-*/
+// document.getElementsByClassName("card").addEventListener("click",function() {document.querySelector(".card").classList.toggle("match")});
+
+// document.querySelectorAll(".card").addEventListener("click",cardSelect);
+
+// let card = document.querySelector(".card");
+
+// cards.addEventListener("onclick", cardSelect(card))
