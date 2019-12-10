@@ -4,7 +4,7 @@
 // *3 - All Cards must be flipped down at the start of the game.
 // *4 - A click on a card flip it faced up.
 // *5 - If two cards clicked then latch, or hide.
-*6 - Create a list that holds all of opened cards
+// *6 - Create a list that holds all of opened cards
 *7 - Each 2 clicks is one move. 
 *8 - Time start at the start of the game.
 *9 - Restarting the game is possible. 
@@ -18,6 +18,9 @@ Bonus:
 * if the cards match, make animation and make the background green.
 * Flipping card animation.
 * Leaderboard
+
+Bugs:
+* you should not be able to click clicked cards. 
 */
 
 // The start of the code. 
@@ -39,6 +42,9 @@ setTimeout(toggleCards,3000);
 let cardFlag = 1;
 let card1 , class1, class2;
 let matchCounter = 0;
+let movesCounter = 0;
+let moves = document.querySelector(".moves");
+moves.textContent = movesCounter;
 
 function cardLatch(element) {
     element.classList.toggle("show");
@@ -55,6 +61,7 @@ function cardReset(element) {
 }
 
 function cardSelect() {
+    // TODO: Condition to check if the card already clicked.
     this.setAttribute("class", "show open card");
     
     if (cardFlag === 1) {
@@ -74,12 +81,14 @@ function cardSelect() {
                 cardReset(this);
                 cardReset(card1);
             }
-    
+            movesCounter += 1;
+            moves.textContent = movesCounter;
+
         }
         cardFlag = 1;
     }
     if (matchCounter === 16) {
-        console.log("You have won!")
+        alert("You have won!")
     }
 }
 
