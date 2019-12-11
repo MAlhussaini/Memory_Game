@@ -116,4 +116,13 @@ h1 {
 
 .timer {
     margin: 0 100px 0 0;
+    font-family: Georgia;
+    font-variant: small-caps;
+    font-size: 18px;
+}
+
+.start {
+    font-weight: bold;
+    font-size: 22px;
+    color: red;
 }
