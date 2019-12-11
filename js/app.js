@@ -23,103 +23,107 @@ Bugs:
 * you should not be able to click clicked cards. 
 */
 
-// The start of the code. 
+// The start of the code.
 
 // Toggle the cards
 let cards = document.querySelectorAll(".card");
 
-function toggleCards () {
-    for (const element of cards) {
-        element.classList.toggle("show");
-    }
-
+function toggleCards() {
+  for (const element of cards) {
+    element.classList.toggle("show");
+  }
 }
 
-setTimeout(toggleCards,300);
-setTimeout(toggleCards,3000);
+setTimeout(toggleCards, 300);
+setTimeout(toggleCards, 3000);
 
 // Adding event listener to show the cards
 let cardFlag = 1;
-let card1 , class1, class2;
+let card1, class1, class2;
 let matchCounter = 0;
 let movesCounter = 0;
 let moves = document.querySelector(".moves");
 moves.textContent = movesCounter;
 
 function cardLatch(element) {
-
-    element.setAttribute("class", "match card");
-    matchCounter += 1;
+  element.setAttribute("class", "match card");
+  matchCounter += 1;
 }
-
 
 function cardReset(element) {
-    element.setAttribute("class", "card no-match");
-    setTimeout(function() {
-        element.classList.remove("no-match")},700);
+  element.setAttribute("class", "card no-match");
+  setTimeout(function() {
+    element.classList.remove("no-match");
+  }, 700);
 }
-function cardLogic (element) {
-
-    if (cardFlag === 1) {
-        class1 = element.firstElementChild.className
-        cardFlag = 2;
-        card1 = element;
+function cardLogic(element) {
+  if (cardFlag === 1) {
+    class1 = element.firstElementChild.className;
+    cardFlag = 2;
+    card1 = element;
+  } else {
+    if (cardFlag === 2) {
+      class2 = element.firstElementChild.className;
+      if (class1 === class2) {
+        cardLatch(element);
+        cardLatch(card1);
+      } else {
+        cardReset(element);
+        cardReset(card1);
+      }
+      movesCounter += 1;
+      moves.textContent = movesCounter;
     }
-    else {
-
-        if (cardFlag === 2) {
-            class2 = element.firstElementChild.className
-            if (class1 === class2) {
-                cardLatch(element)
-                cardLatch(card1)
-            }
-            else {
-                cardReset(element);
-                cardReset(card1);
-            }
-            movesCounter += 1;
-            moves.textContent = movesCounter;
-
-        }
-        cardFlag = 1;
-    }
-    if (matchCounter === 16) {
-        alert("You have won!")
-    }
-
+    cardFlag = 1;
+  }
+  if (matchCounter === 16) {
+    alert("You have won!");
+  }
 }
 function cardSelect() {
-    // TODO: Condition to check if the card already clicked.
-    if ( this.classList.contains("match") === false && this.classList.contains("show") === false && this.classList.contains("no-match") === false) {
-        this.setAttribute("class", "show open card");
-        cardLogic(this)
-    }
-    
+  if (
+    this.classList.contains("match") === false &&
+    this.classList.contains("show") === false &&
+    this.classList.contains("no-match") === false
+  ) {
+    this.setAttribute("class", "show open card");
+    cardLogic(this);
+  }
 }
 
 for (const card of cards) {
-    card.addEventListener("click",cardSelect)
+  card.addEventListener("click", cardSelect);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
 
-    return array;
+  return array;
+}
+
+function restartGame() {
+    //! Restart page!
+    location.reload();
+  // TODO: Shuffle cards
+  // TODO: Remove all latching cards
+  // TODO: Reset moves
+  // TODO: Reset time.
+  // TODO: Toggle cards
+
 }
 
 // !Small scale code.
-
-
-
 
 /* 
 function cardSelect() {
