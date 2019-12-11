@@ -47,9 +47,8 @@ let moves = document.querySelector(".moves");
 moves.textContent = movesCounter;
 
 function cardLatch(element) {
-    element.classList.toggle("show");
-    element.classList.toggle("open");        
-    element.classList.toggle("match");
+
+    element.setAttribute("class", "match card");
     matchCounter += 1;
 }
 
@@ -59,26 +58,23 @@ function cardReset(element) {
     setTimeout(function() {
         element.classList.remove("no-match")},700);
 }
+function cardLogic (element) {
 
-function cardSelect() {
-    // TODO: Condition to check if the card already clicked.
-    this.setAttribute("class", "show open card");
-    
     if (cardFlag === 1) {
-        class1 = this.firstElementChild.className
+        class1 = element.firstElementChild.className
         cardFlag = 2;
-        card1 = this;
+        card1 = element;
     }
     else {
 
         if (cardFlag === 2) {
-            class2 = this.firstElementChild.className
+            class2 = element.firstElementChild.className
             if (class1 === class2) {
-                cardLatch(this)
+                cardLatch(element)
                 cardLatch(card1)
             }
             else {
-                cardReset(this);
+                cardReset(element);
                 cardReset(card1);
             }
             movesCounter += 1;
@@ -90,6 +86,15 @@ function cardSelect() {
     if (matchCounter === 16) {
         alert("You have won!")
     }
+
+}
+function cardSelect() {
+    // TODO: Condition to check if the card already clicked.
+    if ( this.classList.contains("match") === false && this.classList.contains("show") === false && this.classList.contains("no-match") === false) {
+        this.setAttribute("class", "show open card");
+        cardLogic(this)
+    }
+    
 }
 
 for (const card of cards) {
