@@ -143,6 +143,16 @@ function shuffle(array) {
   return array;
 }
 
+function restartGame() {
+  //! Restart page!
+  location.reload();
+  // TODO: Shuffle cards
+  // TODO: Remove all latching cards
+  // TODO: Reset moves
+  // TODO: Reset time.
+  // TODO: Toggle cards
+}
+
 // !Small scale code.
 
 /* 
