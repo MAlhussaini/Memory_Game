@@ -27,6 +27,30 @@ Bugs:
 // Toggle the cards
 let cards = document.querySelectorAll(".card");
 
+
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+  console.log(array);
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  console.log(array);
+  return array;
+}
+
+let cardArray = document.querySelector(".deck").getElementsByTagName("i");
+
+cardArray = shuffle(cardArray);
+
 function toggleCards() {
   for (const element of cards) {
     element.classList.toggle("show");
@@ -35,6 +59,7 @@ function toggleCards() {
 
 setTimeout(toggleCards, 300);
 setTimeout(toggleCards, 3000);
+
 
 // Adding event listener to show the cards
 let cardFlag = 0;
@@ -124,23 +149,6 @@ function cardSelect() {
 
 for (const card of cards) {
   card.addEventListener("click", cardSelect);
-}
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
 }
 
 function restartGame() {
