@@ -6,17 +6,20 @@
 // *5 - If two cards clicked then latch, or hide.
 // *6 - Create a list that holds all of opened cards
 // *7 - Each 2 clicks is one move. 
-*8 - Time start at the start of the game.
-*9 - Restarting the game is possible. 
+// *8 - Time start at the start of the game.
+// *9 - Restarting the game is possible. 
 *10- Stars are calculated based on a formula. 
 *11- At the end of the game, popup shows the stats and name of player.
+*12- Time stops at the end of the game.
 
 Bonus:
 * Flipping card animation.
 // * Game start: Show all the cared faced up for 3s.
 * Shake the cards OR make the background color red on wrong answers.
 * if the cards match, make animation and make the background green.
-* Leaderboard
+* Leaderboard (Max score 10,000)
+* Each second -13 points
+* Each move is -150 points
 
 Bugs:
 // * you should not be able to click clicked cards. 
@@ -26,6 +29,69 @@ Bugs:
 
 // Toggle the cards
 let cards = document.querySelectorAll(".card");
+
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+let cardArray = document.querySelector(".deck").getElementsByTagName("i")
+console.log(cardArray);
+
+function shuffle(arrayList) {
+  let arrayLength = arrayList.length + 1;
+  let randomIndex;
+  // let temporaryValue;
+  for (let i = 0; i < arrayList.length; i++) {
+    randomIndex = Math.floor(Math.random() * arrayLength);
+    if (randomIndex === 16) {
+      randomIndex -= 1;
+    }
+    console.log(randomIndex);
+    console.log(arrayList[i]);
+    temporaryValue = arrayList[i];
+    element.setAttribute("class", "match card");
+    // arrayList[i] = arrayList[randomIndex];
+    // arrayList[randomIndex] = temporaryValue;
+    console.log(arrayList[i]);
+  }
+  console.log(arrayList);
+  return arrayList;
+}
+
+/* 
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+ */
+
+cardArray = shuffle(cardArray);
+console.log(cardArray);
 
 function toggleCards() {
   for (const element of cards) {
@@ -45,10 +111,10 @@ let moves = document.querySelector(".moves");
 moves.textContent = movesCounter;
 
 //game timer
-var second = 0,
-  minute = 0;
-var timer = document.querySelector(".timer");
-var interval;
+let second = 0,
+    minute = 0;
+let timer = document.querySelector(".timer");
+let interval;
 
 function toggleStyle(stylingClass, args) {
   args.classList.toggle(stylingClass);
@@ -62,6 +128,7 @@ function startTimer() {
     timer.innerHTML = minute + "m " + second + "s";
   }, 850);
 
+  // https://scotch.io/tutorials/how-to-build-a-memory-matching-game-in-javascript#toc-5-the-timer
   interval = setInterval(function() {
     timer.innerHTML = minute + "m " + second + "s";
     second++;
@@ -124,23 +191,6 @@ function cardSelect() {
 
 for (const card of cards) {
   card.addEventListener("click", cardSelect);
-}
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
 }
 
 function restartGame() {
