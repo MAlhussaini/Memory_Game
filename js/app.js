@@ -1,22 +1,25 @@
 /* Core Features:
 *1 - Start screen to take the name (Player as default name) and start button.
-*2 - Shuffle all the cards. 
+// *2 - Shuffle all the cards. 
 // *3 - All Cards must be flipped down at the start of the game.
 // *4 - A click on a card flip it faced up.
 // *5 - If two cards clicked then latch, or hide.
 // *6 - Create a list that holds all of opened cards
 // *7 - Each 2 clicks is one move. 
-*8 - Time start at the start of the game.
-*9 - Restarting the game is possible. 
+// *8 - Time start at the start of the game.
+// *9 - Restarting the game is possible. 
 *10- Stars are calculated based on a formula. 
-*11- At the end of the game, popup shows the stats and name of player.
+*11- Time stops at the end of the game
+*12- At the end of the game, popup shows the stats and name of player.
 
 Bonus:
 * Flipping card animation.
 // * Game start: Show all the cared faced up for 3s.
-* Shake the cards OR make the background color red on wrong answers.
+* Shake the cards 
+// *make the background color red on wrong answers.
 * if the cards match, make animation and make the background green.
 * Leaderboard
+* Hardness of the game (More grid / start vision is less)
 
 Bugs:
 // * you should not be able to click clicked cards. 
@@ -27,29 +30,29 @@ Bugs:
 // Toggle the cards
 let cards = document.querySelectorAll(".card");
 
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-  console.log(array);
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+function shuffle(arrayList) {
+  let arrayLength = arrayList.length + 1;
+  let randomIndex;
+  let temporaryValue;
+  for (let i = 0; i < arrayList.length; i++) {
+    randomIndex = Math.floor(Math.random() * arrayLength);
+    if (randomIndex === 16) {
+      randomIndex -= 1;
+    }
+    temporaryValue = arrayList[i].className;
+    arrayList[i].className = arrayList[randomIndex].className;
+    arrayList[randomIndex].className = temporaryValue;
+    console.log(arrayList[i]);
   }
-
-  console.log(array);
-  return array;
+  return arrayList;
 }
 
-let cardArray = document.querySelector(".deck").getElementsByTagName("i");
+let cardArray = document.querySelector(".deck").getElementsByTagName("i")
+console.log(cardArray);
 
 cardArray = shuffle(cardArray);
+console.log(cardArray);
+
 
 function toggleCards() {
   for (const element of cards) {
