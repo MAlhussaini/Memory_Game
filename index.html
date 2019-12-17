@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Matching Game</title>
@@ -8,6 +9,7 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="container">
@@ -17,17 +19,17 @@
 
         <section class="score-panel">
             <span class="timer">Ready!</span>
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+            <ul class="stars">
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+            </ul>
 
-        	<span class="moves">3</span> Moves
+            <span class="moves">3</span> Moves
 
             <div class="restart" onclick="restartGame()">
-        		<i class="fa fa-repeat"></i>
-        	</div>
+                <i class="fa fa-repeat"></i>
+            </div>
         </section>
 
         <ul class="deck">
@@ -81,7 +83,32 @@
             </li>
         </ul>
     </div>
+    <div class="overlay">
+        <div class="popup">
+            <div id="text-box">
+                <h6>Rating</h6>
+                <ul id="starRating">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                </ul>
+                <div class="division right">
+                    <h6>Time played</h6>
+                    <h6 id="play-time">00</h6>    
+                </div>
+                <div class="division left">
+                    <h6>Moves</h6>
+                    <h6 id="moves">3</h6>    
+                </div>
+            </div>
+
+            <button type="reset" class="restart" id="restart" onclick="restartGame()">
+                <i class="fa fa-repeat"></i>
+            </button>
+        </div>
+    </div>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

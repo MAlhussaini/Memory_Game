@@ -78,6 +78,21 @@ var second = 0,
 var timer = document.querySelector(".timer");
 var interval;
 
+function gameOver() {
+  moves = document.querySelector(".moves").innerHTML;
+  popMoves = document.querySelector("#moves");
+  timer = document.querySelector(".timer").innerHTML;
+  popTimer = document.querySelector("#play-time");
+  stars = document.querySelector(".stars").innerHTML;
+  stars = document.querySelector(".stars").innerHTML;
+  
+  popMoves.textContent = moves
+  popTimer.textContent = timer
+  console.log(stars);
+
+  document.querySelector(".overlay").setAttribute("class", "overlay unhide")
+}
+
 function toggleStyle(stylingClass, args) {
   args.classList.toggle(stylingClass);
 }
@@ -132,7 +147,7 @@ function cardLogic(element) {
     cardFlag = 1;
   }
   if (matchCounter === 16) {
-    alert("You have won!");
+    gameOver();
   }
 }
 function cardSelect() {
