@@ -8,9 +8,9 @@
 // *7 - Each 2 clicks is one move. 
 // *8 - Time start at the start of the game.
 // *9 - Restarting the game is possible. 
-*10- Stars are calculated based on a formula. 
-*11- Time stops at the end of the game
-*12- At the end of the game, popup shows the stats and name of player.
+// *10- Stars are calculated based on a formula. 
+// *11- Time stops at the end of the game
+// *12- At the end of the game, popup shows the stats and name of player.
 
 Bonus:
 * Flipping card animation.
@@ -84,12 +84,11 @@ function gameOver() {
   timer = document.querySelector(".timer").innerHTML;
   popTimer = document.querySelector("#play-time");
   stars = document.querySelector(".stars").innerHTML;
-  stars = document.querySelector(".stars").innerHTML;
+  popStars = document.querySelector("#starRating");
   
-  popMoves.textContent = moves
-  popTimer.textContent = timer
-  console.log(stars);
-
+  popMoves.textContent = moves;
+  popTimer.textContent = timer;
+  popStars.innerHTML = stars;
   document.querySelector(".overlay").setAttribute("class", "overlay unhide")
 }
 
@@ -111,6 +110,22 @@ function startTimer() {
     if (second == 60) {
       minute++;
       second = 0;
+    }
+  }, 1000);
+}
+
+function starCalc() {
+  console.log("starCalc has started.")
+  let counter = 0, stars, theStar;
+  let oneStar = 25, twoStars = 19;
+  setInterval(function() {
+    counter++;
+    console.log(counter);
+    if (counter === twoStars || counter === oneStar) {
+      console.log("if condition has started.")
+      stars = document.querySelector(".stars");
+      theStar = stars.firstElementChild;  
+      stars.removeChild(theStar)
     }
   }, 1000);
 }
@@ -153,6 +168,7 @@ function cardLogic(element) {
 function cardSelect() {
   if (cardFlag === 0) {
     startTimer();
+    starCalc();
     cardFlag = 1;
   }
   if (
