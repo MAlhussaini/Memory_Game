@@ -1,35 +1,28 @@
-/* Core Features:
-*1 - Start screen to take the name (Player as default name) and start button.
-// *2 - Shuffle all the cards. 
-// *3 - All Cards must be flipped down at the start of the game.
-// *4 - A click on a card flip it faced up.
-// *5 - If two cards clicked then latch, or hide.
-// *6 - Create a list that holds all of opened cards
-// *7 - Each 2 clicks is one move. 
-// *8 - Time start at the start of the game.
-// *9 - Restarting the game is possible. 
-// *10- Stars are calculated based on a formula. 
-// *11- Time stops at the end of the game
-// *12- At the end of the game, popup shows the stats and name of player.
+// Getting elements from the DOM
+let cards = document.querySelectorAll(".card"); // All cards in the DOM
+// Getting all cards Symbols
+let cardArray = document.querySelector(".deck").getElementsByTagName("i");
+let moves = document.querySelector(".moves");
+let timer = document.querySelector(".timer");
 
-Bonus:
-* Flipping card animation.
-// * Game start: Show all the cared faced up for 3s.
-* Shake the cards 
-// *make the background color red on wrong answers.
-* if the cards match, make animation and make the background green.
-* Leaderboard
-* Hardness of the game (More grid / start vision is less)
+// Initializing global variables.
+let card1, class1, class2;
+let timeInterval, starInterval;
+let cardFlag = 0;
+let matchCounter = 0,
+  movesCounter = 0;
+let second = 0,
+  minute = 0;
 
-Bugs:
-// * you should not be able to click clicked cards. 
-*/
+moves.textContent = movesCounter; // Initializing the HTML moves text to zero
 
-// The start of the code.
+// Adding event listener for all the cards
+for (const card of cards) {
+  card.addEventListener("click", cardSelect);
+}
 
-// Toggle the cards
-let cards = document.querySelectorAll(".card");
-
+// Shuffle and render the cards on deck
+// The idea from http://stackoverflow.com/a/2450976
 function shuffle(arrayList) {
   let arrayLength = arrayList.length + 1;
   let randomIndex;
@@ -47,64 +40,23 @@ function shuffle(arrayList) {
   return arrayList;
 }
 
-let cardArray = document.querySelector(".deck").getElementsByTagName("i")
-console.log(cardArray);
-
-cardArray = shuffle(cardArray);
-console.log(cardArray);
-
-
+// Toggle all the cards to show its face.
 function toggleCards() {
   for (const element of cards) {
     element.classList.toggle("show");
   }
 }
 
-setTimeout(toggleCards, 300);
-setTimeout(toggleCards, 3000);
-
-
-// Adding event listener to show the cards
-let cardFlag = 0;
-let card1, class1, class2;
-let matchCounter = 0;
-let movesCounter = 0;
-let moves = document.querySelector(".moves");
-moves.textContent = movesCounter;
-
-//game timer
-var second = 0,
-  minute = 0;
-var timer = document.querySelector(".timer");
-var interval;
-
-function gameOver() {
-  moves = document.querySelector(".moves").innerHTML;
-  popMoves = document.querySelector("#moves");
-  timer = document.querySelector(".timer").innerHTML;
-  popTimer = document.querySelector("#play-time");
-  stars = document.querySelector(".stars").innerHTML;
-  popStars = document.querySelector("#starRating");
-  
-  popMoves.textContent = moves;
-  popTimer.textContent = timer;
-  popStars.innerHTML = stars;
-  document.querySelector(".overlay").setAttribute("class", "overlay unhide")
-}
-
-function toggleStyle(stylingClass, args) {
-  args.classList.toggle(stylingClass);
-}
-
+// Timer function
 function startTimer() {
   timer.innerHTML = "GO!";
   toggleStyle("start", timer);
+
   setTimeout(function() {
     toggleStyle("start", timer);
     timer.innerHTML = minute + "m " + second + "s";
   }, 850);
-
-  interval = setInterval(function() {
+  timeInterval = setInterval(function() {
     timer.innerHTML = minute + "m " + second + "s";
     second++;
     if (second == 60) {
@@ -114,63 +66,20 @@ function startTimer() {
   }, 1000);
 }
 
-function starCalc() {
-  console.log("starCalc has started.")
-  let counter = 0, stars, theStar;
-  let oneStar = 25, twoStars = 19;
-  setInterval(function() {
-    counter++;
-    console.log(counter);
-    if (counter === twoStars || counter === oneStar) {
-      console.log("if condition has started.")
-      stars = document.querySelector(".stars");
-      theStar = stars.firstElementChild;  
-      stars.removeChild(theStar)
-    }
-  }, 1000);
+// Toggle a DOM element by a givin css style.
+function toggleStyle(stylingClass, args) {
+  args.classList.toggle(stylingClass);
 }
 
-function cardLatch(element) {
-  element.setAttribute("class", "match card");
-  matchCounter += 1;
-}
-
-function cardReset(element) {
-  element.setAttribute("class", "card no-match");
-  setTimeout(function() {
-    element.classList.remove("no-match");
-  }, 700);
-}
-function cardLogic(element) {
-  if (cardFlag === 1) {
-    class1 = element.firstElementChild.className;
-    cardFlag = 2;
-    card1 = element;
-  } else {
-    if (cardFlag === 2) {
-      class2 = element.firstElementChild.className;
-      if (class1 === class2) {
-        cardLatch(element);
-        cardLatch(card1);
-      } else {
-        cardReset(element);
-        cardReset(card1);
-      }
-      movesCounter += 1;
-      moves.textContent = movesCounter;
-    }
-    cardFlag = 1;
-  }
-  if (matchCounter === 16) {
-    gameOver();
-  }
-}
+// Event listener function, selecting cards.
 function cardSelect() {
+  // Check if this is the first card of the game, then start the timer functions.
   if (cardFlag === 0) {
     startTimer();
-    starCalc();
+    starRating();
     cardFlag = 1;
   }
+  // Call the cards logic function, only if the card is not flipped already.
   if (
     this.classList.contains("match") === false &&
     this.classList.contains("show") === false &&
@@ -181,25 +90,101 @@ function cardSelect() {
   }
 }
 
-for (const card of cards) {
-  card.addEventListener("click", cardSelect);
+// The logic after selecting a card, and the brain of the game.
+function cardLogic(element) {
+  // Checking if the card selected is the first of 2 cards. Else it is the second card.
+  if (cardFlag === 1) {
+    // Getting the class of the first card.
+    class1 = element.firstElementChild.className;
+    cardFlag = 2; // Setting the flag to wait for the second card.
+    card1 = element; // Taking the DOM element of the first card.
+  } else {
+    if (cardFlag === 2) {
+      // Getting the class of the second card.
+      class2 = element.firstElementChild.className;
+      if (class1 === class2) {
+        cardLatch(card1); // Latch the first card
+        cardLatch(element); // Latch the second card
+      } else {
+        cardReset(card1); // Reset the first card
+        cardReset(element); // Reset the second card
+      }
+      movesCounter += 1;
+      moves.textContent = movesCounter;
+    }
+    cardFlag = 1; // Setting the flag to wait for the first card again.
+  }
+  // Check if the game had reach to an end.
+  if (matchCounter === 16) {
+    gameOver();
+  }
 }
 
+// Implementing a card match styling for matched cards.
+function cardLatch(element) {
+  element.setAttribute("class", "match card");
+  matchCounter += 1;
+}
+
+// Implement a wrong cards styling, then reset the styling of the cards to hide them.
+function cardReset(element) {
+  element.setAttribute("class", "card no-match");
+  setTimeout(function() {
+    element.classList.remove("no-match");
+  }, 700);
+}
+
+// Calculating the stars taking based on time spent playing.
+function starRating() {
+  let stars, theStar;
+  let counter = 0,
+    oneStar = 25, // One star condition threshold.
+    twoStars = 19; // Two stars condition threshold.
+  starInterval = setInterval(function() {
+    counter++;
+    // Remove one star if condition met.
+    if (counter === twoStars || counter === oneStar) {
+      stars = document.querySelector(".stars");
+      theStar = stars.firstElementChild;
+      stars.removeChild(theStar);
+    }
+  }, 1000);
+}
+
+// Ending the game.
+function gameOver() {
+  clearInterval(timeInterval);
+  clearInterval(starInterval);
+  congratsPopup(); // Showing the congratulation popup. 
+}
+
+// Showing the congratulation message after the game ends.
+function congratsPopup() {
+  // Getting stat elements from the DOM
+  moves = document.querySelector(".moves").innerHTML;
+  popMoves = document.querySelector("#moves");
+  timer = document.querySelector(".timer").innerHTML;
+  popTimer = document.querySelector("#play-time");
+  stars = document.querySelector(".stars").innerHTML;
+  popStars = document.querySelector("#starRating");
+
+  // Repainting the HTML popup with the game stats.
+  popMoves.textContent = moves;
+  popTimer.textContent = timer;
+  popStars.innerHTML = stars;
+
+  // Unhide the game popup.
+  document.querySelector(".overlay").setAttribute("class", "overlay unhide");
+}
+
+// Function to restart the game. (Called by a button)
 function restartGame() {
-  //! Restart page!
   location.reload();
-  // TODO: Shuffle cards
-  // TODO: Remove all latching cards
-  // TODO: Reset moves
-  // TODO: Reset time.
-  // TODO: Toggle cards
 }
 
-// !Small scale code.
+// Shuffle the cards at the start of the game.
+cardArray = shuffle(cardArray);
 
-/* 
-function cardSelect() {
-    this.classList.toggle("show");
-    this.classList.toggle("open");        
-}
- */
+// Toggle all the cards for 3s at the start of the game.
+setTimeout(toggleCards, 300);
+setTimeout(toggleCards, 3000);
