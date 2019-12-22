@@ -39,6 +39,10 @@ I manipulated the DOM with Vanilla JS, and also have altered part of the HTML an
 - added effects to cards when they match and are unmatched
 - create a pop-up modal when player wins game
 
+###Dependency
+* [Font Awesome] (https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css)
+* [Google Fonts] (https://fonts.googleapis.com/css?family=Coda) 
+
 ## Contributing
 
 The majority of the project HTML and CSS styling is taking from the udacity team repository.
