@@ -40,8 +40,8 @@ I manipulated the DOM with Vanilla JS, and also have altered part of the HTML an
 - create a pop-up modal when player wins game
 
 ###Dependency
-* [Font Awesome] (https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css)
-* [Google Fonts] (https://fonts.googleapis.com/css?family=Coda) 
+* [Font Awesome](https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css)
+* [Google Fonts](https://fonts.googleapis.com/css?family=Coda) 
 
 ## Contributing
 
